@@ -7,6 +7,19 @@
     "default_popup": "index.html",
     "default_title": "EIP-7702 Revoker"
   },
+  "icons": {
+  "16": "icon16.png",
+  "48": "icon48.png",
+  "128": "icon128.png"
+},
+"action": {
+  "default_popup": "index.html",
+  "default_icon": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  }
+}
   "background": {
     "service_worker": "src/background/index.ts",
     "type": "module"

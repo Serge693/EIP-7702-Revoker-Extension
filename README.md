@@ -1,73 +1,136 @@
-# React + TypeScript + Vite
+# EIP-7702 Revoker Extension
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Manifest: v3](https://img.shields.io/badge/manifest-v3-green.svg)]()
 
-Currently, two official plugins are available:
+A browser extension to scan, revoke, and manage **EIP-7702 delegations** across 19 EVM networks — with sponsored gas, no ETH required on the compromised wallet.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## The Problem
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+EIP-7702 (Pectra upgrade, May 2025) allows an EOA to temporarily act as a smart contract by delegating to a contract address. Attackers exploit this by phishing users into signing a malicious authorization — giving the attacker full control over the wallet.
 
-## Expanding the ESLint configuration
+Once delegated, the attacker can:
+- Drain all tokens and NFTs
+- Forward any incoming funds automatically
+- Block the victim from sending transactions
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+**The victim cannot fight back** — any ETH sent to pay gas gets stolen instantly by the delegation logic.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## How This Extension Solves It
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+Compromised wallet (private key) → signs EIP-7702 authorization locally
+                                              ↓
+                              Sponsor wallet (stored encrypted) → sends Type-4 tx
+                                              ↓
+                                    Delegation revoked — wallet clean
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- The **compromised wallet** needs zero ETH — gas is fully sponsored
+- The **private key** is used only locally in the browser — never sent anywhere
+- The **sponsor key** is stored encrypted with AES-256-GCM — password protected
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+---
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Features
+
+- 🔍 **Scan** — check delegation status across 19 EVM networks simultaneously
+- 🚫 **Revoke** — remove malicious delegations with sponsored gas
+- 🔗 **Delegate** — set trusted delegations (for advanced users)
+- ☑️ **Batch operations** — select multiple networks and revoke/delegate in one click
+- 🔐 **Encrypted sponsor key** — AES-256-GCM, never leaves your device
+- ⚡ **No server** — fully client-side, no backend required
+
+---
+
+## Supported Networks
+
+| Network | Chain ID | Native |
+|---|---|---|
+| Ethereum | 1 | ETH |
+| Base | 8453 | ETH |
+| Ink | 57073 | ETH |
+| Arbitrum One | 42161 | ETH |
+| OP Mainnet | 10 | ETH |
+| Polygon | 137 | POL |
+| BNB Smart Chain | 56 | BNB |
+| Gnosis Chain | 100 | xDAI |
+| Linea | 59144 | ETH |
+| Blast | 81457 | ETH |
+| Mode | 34443 | ETH |
+| Soneium | 1868 | ETH |
+| zkSync Era | 324 | ETH ⚠️ |
+| Berachain | 80094 | BERA |
+| Unichain | 130 | ETH |
+| World Chain | 480 | ETH |
+| Lisk | 1135 | ETH |
+| Bob | 60808 | ETH |
+| Zora | 7777777 | ETH |
+
+> ⚠️ zkSync Era may not fully support EIP-7702 — use with caution.
+
+---
+
+## Installation
+
+### From source
+
+```bash
+git clone https://github.com/Serge693/EIP-7702-Revoker-Extension
+cd EIP-7702-Revoker-Extension
+npm install
+npm run build
 ```
+
+Load `dist/` as an unpacked extension in Chrome:
+1. Open `chrome://extensions/`
+2. Enable **Developer mode**
+3. Click **Load unpacked** → select the `dist/` folder
+
+### Setup sponsor wallet
+
+1. Open the extension → **Settings** tab
+2. Enter the private key of a wallet with gas on target networks
+3. Set an encryption password (min 6 characters)
+4. Click **Save & Encrypt**
+
+The sponsor key is encrypted with AES-256-GCM and stored in `chrome.storage.local`. It never leaves your device.
+
+---
+
+## Usage
+
+1. Open the extension → **Scan & Revoke** tab
+2. Enter the **private key of the compromised wallet** (used locally only to sign the EIP-7702 authorization)
+3. The address auto-fills — click **Scan All Networks**
+4. Unlock the sponsor wallet with your password
+5. Select networks with active delegations (checkboxes) → click **Revoke Selected**
+
+---
+
+## Security Model
+
+| What | Where | Sent to server? |
+|---|---|---|
+| Compromised wallet private key | Browser memory only | ❌ Never |
+| EIP-7702 authorization signature | Browser → sponsor tx | Only `r`, `s`, `yParity` |
+| Sponsor private key | `chrome.storage.local` encrypted | ❌ Never |
+| Delegation scan results | Public RPC calls | No sensitive data |
+
+---
+
+## Related Tools
+
+- [EIP-7702 Revoker CLI](https://github.com/Serge693/eip7702-revoker) — command-line tool for revoking delegations
+- [EIP-7702 Rescue Web](https://github.com/Serge693/eip7702-rescue-web) — web UI for rescuing funds from compromised wallets
+- [AutoForwarder](https://github.com/Serge693/auto-forwarder) — permanent EIP-7702 delegation to auto-forward incoming funds
+
+---
+
+## License
+
+MIT © Serge693

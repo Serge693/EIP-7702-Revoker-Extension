@@ -14,6 +14,7 @@ interface Authorization {
 const GAS_FALLBACK: Record<number, bigint> = {
   1:       200000n,
   8453:    200000n,
+  57073:   200000n, // Ink
   42161:   200000n,
   10:      200000n,
   137:     2000000n,
@@ -120,9 +121,7 @@ export async function sendSponsoredRevoke(
     if (estimateData.result) {
       const estimated = BigInt(estimateData.result);
       gas = (estimated * 150n) / 100n;
-      // Для Polygon минимум 2M
       if (chainId === 137 && gas < 2000000n) gas = 2000000n;
-      // Berachain минимум 2M газа
       if (chainId === 80094 && gas < 2000000n) gas = 2000000n;
     }
   } catch { }

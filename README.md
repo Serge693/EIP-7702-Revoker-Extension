@@ -3,7 +3,7 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Manifest: v3](https://img.shields.io/badge/manifest-v3-green.svg)]()
 
-A browser extension to scan, revoke, and manage **EIP-7702 delegations** across 18 EVM networks — with sponsored gas, no ETH required on the compromised wallet.
+A browser extension to scan, revoke, and manage **EIP-7702 delegations** across 19 EVM networks — with sponsored gas, no ETH required on the compromised wallet.
 
 ---
 
@@ -38,7 +38,7 @@ Compromised wallet (private key) → signs EIP-7702 authorization locally
 
 ## Features
 
-- 🔍 **Scan** — check delegation status across 18 EVM networks simultaneously
+- 🔍 **Scan** — check delegation status across 19 EVM networks simultaneously
 - 🚫 **Revoke** — remove malicious delegations with sponsored gas
 - 🔗 **Delegate** — set trusted delegations (for advanced users)
 - ☑️ **Batch operations** — select multiple networks and revoke/delegate in one click
@@ -53,6 +53,7 @@ Compromised wallet (private key) → signs EIP-7702 authorization locally
 |---|---|---|
 | Ethereum | 1 | ETH |
 | Base | 8453 | ETH |
+| Ink | 57073 | ETH |
 | Arbitrum One | 42161 | ETH |
 | OP Mainnet | 10 | ETH |
 | Polygon | 137 | POL |
@@ -79,8 +80,8 @@ Compromised wallet (private key) → signs EIP-7702 authorization locally
 ### From source
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/eip7702-revoker-extension
-cd eip7702-revoker-extension
+git clone https://github.com/Serge693/EIP-7702-Revoker-Extension
+cd EIP-7702-Revoker-Extension
 npm install
 npm run build
 ```
@@ -125,7 +126,8 @@ The sponsor key is encrypted with AES-256-GCM and stored in `chrome.storage.loca
 ## Related Tools
 
 - [EIP-7702 Revoker CLI](https://github.com/Serge693/eip7702-revoker) — command-line tool for revoking delegations
-- [EIP-7702 Rescue Tool](https://github.com/Serge693/EIP-7702-Rescue-Tool) — rescue funds from compromised wallets using EIP-7702 delegation
+- [EIP-7702 Rescue Web](https://github.com/Serge693/eip7702-rescue-web) — web UI for rescuing funds from compromised wallets
+- [AutoForwarder](https://github.com/Serge693/auto-forwarder) — permanent EIP-7702 delegation to auto-forward incoming funds
 
 ---
 

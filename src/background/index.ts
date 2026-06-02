@@ -15,12 +15,10 @@ chrome.runtime.onMessage.addListener((
 
   if (message.type === 'PING') {
     sendResponse({ status: 'ok', version: '1.0.0' });
-    return true; // Важно для асинхронных ответов
+    return true;
   }
 
-  // Будем добавлять revoke-логику позже
   if (message.type === 'REVOKE_EIP7702') {
-    // TODO: Реализовать revoke
     sendResponse({ status: 'received' });
     return true;
   }

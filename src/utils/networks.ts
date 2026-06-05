@@ -130,6 +130,13 @@ export const supportedChains = [
     blockExplorers: { default: { name: 'Bob Explorer', url: 'https://explorer.gobob.xyz' } },
   }),
   defineChain({
+    id: 98866,
+    name: 'Plume',
+    nativeCurrency: { name: 'Plume', symbol: 'PLUME', decimals: 18 },
+    rpcUrls: { default: { http: ['https://rpc.plume.org'] } },
+    blockExplorers: { default: { name: 'Plume Explorer', url: 'https://explorer.plume.org' } },
+  }),
+  defineChain({
     id: 7777777,
     name: 'Zora',
     nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },

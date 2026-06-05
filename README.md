@@ -70,6 +70,7 @@ Compromised wallet (private key) → signs EIP-7702 authorization locally
 | Lisk | 1135 | ETH |
 | Bob | 60808 | ETH |
 | Zora | 7777777 | ETH |
+| Plume   | 98866 | PLUME |
 
 > ⚠️ zkSync Era may not fully support EIP-7702 — use with caution.
 

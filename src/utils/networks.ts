@@ -130,6 +130,13 @@ export const supportedChains = [
     blockExplorers: { default: { name: 'Bob Explorer', url: 'https://explorer.gobob.xyz' } },
   }),
   defineChain({
+    id: 534352,
+    name: 'Scroll',
+    nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
+    rpcUrls: { default: { http: ['https://rpc.scroll.io'] } },
+    blockExplorers: { default: { name: 'Scrollscan', url: 'https://scrollscan.com' } },
+  }),
+  defineChain({
     id: 98866,
     name: 'Plume',
     nativeCurrency: { name: 'Plume', symbol: 'PLUME', decimals: 18 },
